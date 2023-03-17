@@ -11,6 +11,8 @@ class HeatMapContainer extends StatelessWidget {
   final Color? textColor;
   final EdgeInsets? margin;
   final bool? showText;
+  final int? value;
+  final bool? showValue;
   final Function(DateTime dateTime)? onClick;
 
   const HeatMapContainer({
@@ -25,6 +27,8 @@ class HeatMapContainer extends StatelessWidget {
     this.textColor,
     this.onClick,
     this.showText,
+    this.value,
+    this.showValue,
   }) : super(key: key);
 
   @override
@@ -43,14 +47,7 @@ class HeatMapContainer extends StatelessWidget {
             width: size,
             height: size,
             alignment: Alignment.center,
-            child: (showText ?? true)
-                ? Text(
-                    date.day.toString(),
-                    style: TextStyle(
-                        color: textColor ?? const Color(0xFF8A8A8A),
-                        fontSize: fontSize),
-                  )
-                : null,
+            child: displayText(),
             decoration: BoxDecoration(
               color: selectedColor,
               borderRadius:
@@ -64,4 +61,27 @@ class HeatMapContainer extends StatelessWidget {
       ),
     );
   }
+
+  displayText() {
+    var text = "";
+    if (showValue != null && showValue! && value != null) {
+      text = value.toString();
+      if (value! > 99) {
+        text = "99+";
+      }
+    } else if (showText ?? false) {
+      text = date.day.toString();
+    }
+
+    if (text == "") {
+      return null;
+    }
+
+    return Text(
+      text,
+      style: TextStyle(
+          color: textColor ?? const Color(0xFF8A8A8A), fontSize: fontSize),
+    );
+  }
+  
 }
