@@ -13,6 +13,7 @@ class HeatMapContainer extends StatelessWidget {
   final bool? showText;
   final int? value;
   final bool? showValue;
+  final bool? showTextTips;
   final Function(DateTime dateTime)? onClick;
 
   const HeatMapContainer({
@@ -27,6 +28,7 @@ class HeatMapContainer extends StatelessWidget {
     this.textColor,
     this.onClick,
     this.showText,
+    this.showTextTips,
     this.value,
     this.showValue,
   }) : super(key: key);
@@ -66,9 +68,6 @@ class HeatMapContainer extends StatelessWidget {
     var text = "";
     if (showValue != null && showValue! && value != null) {
       text = value.toString();
-      if (value! > 99) {
-        text = "99+";
-      }
     } else if (showText ?? false) {
       text = date.day.toString();
     }
@@ -77,11 +76,21 @@ class HeatMapContainer extends StatelessWidget {
       return null;
     }
 
+    if (showTextTips ?? false) {
+      return Tooltip(
+        message: "${date.year}-${date.month}-${date.day}:  $text",
+        child: Text(
+          text,
+          style: TextStyle(
+              color: textColor ?? const Color(0xFF8A8A8A), fontSize: fontSize),
+        ),
+      );
+    }
+
     return Text(
       text,
       style: TextStyle(
           color: textColor ?? const Color(0xFF8A8A8A), fontSize: fontSize),
     );
   }
-  
 }

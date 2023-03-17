@@ -92,6 +92,9 @@ class HeatMap extends StatefulWidget {
   /// The double value of [HeatMapColorTip]'s tip container's size.
   final double? colorTipSize;
 
+  /// show text tooltips in every blocks .
+  final bool? showTextTips;
+
   const HeatMap({
     Key? key,
     required this.colorsets,
@@ -113,6 +116,7 @@ class HeatMap extends StatefulWidget {
     this.colorTipHelper,
     this.colorTipCount,
     this.colorTipSize,
+      this.showTextTips = false
   }) : super(key: key);
 
   @override
@@ -153,6 +157,7 @@ class _HeatMap extends State<HeatMap> {
           margin: widget.margin,
           showText: widget.showText,
           showValue: widget.showValue,
+          showTextTips: widget.showTextTips,
         )),
 
         // Show HeatMapColorTip if showColorTip is true.
